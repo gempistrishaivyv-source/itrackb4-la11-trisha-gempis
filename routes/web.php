@@ -20,5 +20,4 @@ Route::get('/shoes/filter/{value?}', function ($value = null) {
     return redirect()->route('shoes.index');
 })->name('shoes.filter');
 
-Route::resource('shoes', ShoeController::class)
-    ->only(['index', 'create', 'store', 'show']);
+Route::resource('shoe', ShoeController::class);

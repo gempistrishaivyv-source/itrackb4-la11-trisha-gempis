@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('title', $item['name'])
@@ -26,7 +27,7 @@
 
             <p>
                 <strong>Category:</strong>
-                {{ $item['category'] }}
+                {{ $item->category->name }}
             </p>
 
             <p>
@@ -36,7 +37,7 @@
 
             <a
                 class="btn btn-primary"
-                href="{{ route('shoes.index') }}"
+                href="{{ route('shoe.index') }}"
             >
                 Back to Shoe List
             </a>

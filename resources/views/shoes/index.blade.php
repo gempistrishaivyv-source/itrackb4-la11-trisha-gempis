@@ -1,6 +1,4 @@
 
-
-
 @extends('layouts.app')
 
 @section('title', 'Shoe Collection')
@@ -9,7 +7,7 @@
 <h2>Shoe List</h2>
 
 <p>
-    <a href="{{ route('shoes.create') }}" class="btn btn-primary">
+    <a href="{{ route('shoe.create') }}" class="btn btn-primary">
         Add Shoe
     </a>
 </p>
@@ -23,39 +21,39 @@
 <h5>Filter by Category</h5>
 
 @if ($brand === 'all')
-    <a href="{{ route('shoes.index') }}">All Categories</a>
-    <a href="{{ route('shoes.index', ['category'=>'Sneakers']) }}">Sneakers</a>
-    <a href="{{ route('shoes.index', ['category'=>'Casual']) }}">Casual</a>
-    <a href="{{ route('shoes.index', ['category'=>'Running']) }}">Running</a>
+    <a href="{{ route('shoe.index') }}">All Categories</a>
+    <a href="{{ route('shoe.index', ['category'=>'Sneakers']) }}">Sneakers</a>
+    <a href="{{ route('shoe.index', ['category'=>'Casual']) }}">Casual</a>
+    <a href="{{ route('shoe.index', ['category'=>'Running']) }}">Running</a>
 @else
-    <a href="{{ route('shoes.index', ['brand'=>$brand]) }}">All Categories</a>
-    <a href="{{ route('shoes.index', ['category'=>'Sneakers','brand'=>$brand]) }}">Sneakers</a>
-    <a href="{{ route('shoes.index', ['category'=>'Casual','brand'=>$brand]) }}">Casual</a>
-    <a href="{{ route('shoes.index', ['category'=>'Running','brand'=>$brand]) }}">Running</a>
+    <a href="{{ route('shoe.index', ['brand'=>$brand]) }}">All Categories</a>
+    <a href="{{ route('shoe.index', ['category'=>'Sneakers','brand'=>$brand]) }}">Sneakers</a>
+    <a href="{{ route('shoe.index', ['category'=>'Casual','brand'=>$brand]) }}">Casual</a>
+    <a href="{{ route('shoe.index', ['category'=>'Running','brand'=>$brand]) }}">Running</a>
 @endif
 
 <h5>Filter by Brand</h5>
 
 @if ($category === 'all')
-    <a href="{{ route('shoes.index') }}">All Brands</a>
-    <a href="{{ route('shoes.index', ['brand'=>'Nike']) }}">Nike</a>
-    <a href="{{ route('shoes.index', ['brand'=>'Converse']) }}">Converse</a>
-    <a href="{{ route('shoes.index', ['brand'=>'Puma']) }}">Puma</a>
-    <a href="{{ route('shoes.index', ['brand'=>'Vans']) }}">Vans</a>
-    <a href="{{ route('shoes.index', ['brand'=>'ASICS']) }}">ASICS</a>
-    <a href="{{ route('shoes.index', ['brand'=>'New Balance']) }}">New Balance</a>
+    <a href="{{ route('shoe.index') }}">All Brands</a>
+    <a href="{{ route('shoe.index', ['brand'=>'Nike']) }}">Nike</a>
+    <a href="{{ route('shoe.index', ['brand'=>'Converse']) }}">Converse</a>
+    <a href="{{ route('shoe.index', ['brand'=>'Puma']) }}">Puma</a>
+    <a href="{{ route('shoe.index', ['brand'=>'Vans']) }}">Vans</a>
+    <a href="{{ route('shoe.index', ['brand'=>'ASICS']) }}">ASICS</a>
+    <a href="{{ route('shoe.index', ['brand'=>'New Balance']) }}">New Balance</a>
 @else
-    <a href="{{ route('shoes.index', ['category'=>$category]) }}">All Brands</a>
-    <a href="{{ route('shoes.index', ['category'=>$category,'brand'=>'Nike']) }}">Nike</a>
-    <a href="{{ route('shoes.index', ['category'=>$category,'brand'=>'Converse']) }}">Converse</a>
-    <a href="{{ route('shoes.index', ['category'=>$category,'brand'=>'Puma']) }}">Puma</a>
-    <a href="{{ route('shoes.index', ['category'=>$category,'brand'=>'Vans']) }}">Vans</a>
-    <a href="{{ route('shoes.index', ['category'=>$category,'brand'=>'ASICS']) }}">ASICS</a>
-    <a href="{{ route('shoes.index', ['category'=>$category,'brand'=>'New Balance']) }}">New Balance</a>
+    <a href="{{ route('shoe.index', ['category'=>$category]) }}">All Brands</a>
+    <a href="{{ route('shoe.index', ['category'=>$category,'brand'=>'Nike']) }}">Nike</a>
+    <a href="{{ route('shoe.index', ['category'=>$category,'brand'=>'Converse']) }}">Converse</a>
+    <a href="{{ route('shoe.index', ['category'=>$category,'brand'=>'Puma']) }}">Puma</a>
+    <a href="{{ route('shoe.index', ['category'=>$category,'brand'=>'Vans']) }}">Vans</a>
+    <a href="{{ route('shoe.index', ['category'=>$category,'brand'=>'ASICS']) }}">ASICS</a>
+    <a href="{{ route('shoe.index', ['category'=>$category,'brand'=>'New Balance']) }}">New Balance</a>
 @endif
 
 <p>
-    <a href="{{ route('shoes.index') }}">Clear Both Filters</a>
+    <a href="{{ route('shoe.index') }}">Clear Both Filters</a>
 </p>
 
 <table class="table table-striped table-bordered">
@@ -67,6 +65,7 @@
             <th>Brand</th>
             <th>Category</th>
             <th>Price</th>
+            <th>Action</th>
         </tr>
     </thead>
 
@@ -76,7 +75,7 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $item->id }}</td>
                 <td>
-                    <a href="{{ route('shoes.show', $item->id) }}">
+                    <a href="{{ route('shoe.show', $item->id) }}">
                         {{ $item->name }}
                     </a>
                 </td>
@@ -89,10 +88,21 @@
                         <span class="badge bg-primary">Premium</span>
                     @endif
                 </td>
+                <td>
+                    <form action="{{ route('shoe.destroy', $item) }}" method="POST"
+                          onsubmit="return confirm('Delete this record?')">
+                        @csrf
+                        @method('DELETE')
+
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Delete
+                        </button>
+                    </form>
+                </td>
             </tr>
         @empty
             <tr>
-                <td colspan="6">
+                <td colspan="7">
                     No shoes are available in the collection.
                 </td>
             </tr>

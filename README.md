@@ -1,16 +1,38 @@
-# README
+# Shoe Collection
 
-## G1. Which column did you turn into a table, and why that one and not another?
+A Laravel 12 application for managing a shoe collection. It allows users to view, add, edit, filter, and delete shoe records. It also uses categories through an Eloquent relationship.
 
-I turned the `category` column into a separate `categories` table because the shoe records share the same categories, such as Sneakers, Casual, and Running. Instead of repeatedly storing category names in the shoes table, I used `category_id` to connect each shoe to its category.
+## Laboratory Activity 11 — Finish Your Own CRUD
 
-## G2. What number did screenshot 6 show, and why exactly that number?
+### Features
+- Display the shoe collection.
+- Add new shoe records.
+- View individual shoe details.
+- Edit existing shoe records.
+- Delete shoe records.
+- Filter shoes by category and brand.
+- Use route model binding for CRUD operations.
 
-Screenshot 6 showed **6 queries**. It consisted of one query to retrieve all five shoes and five additional queries to retrieve each shoe's category separately because the relationship was loaded using lazy loading.
+## Part G — Guide Questions
 
-## G3. Your belongsTo method is named in the singular. What would break if you made it plural?
+### G1. What two things are needed for route model binding? What happens if only one is correct?
 
-My relationship method is named `category()` because each shoe belongs to only one category. If I renamed it to `categories()`, the existing `with('category')` and `$item->category->name` references would no longer match the relationship name and would cause errors unless I updated them too.
+Route model binding requires the model to be type-hinted in the controller method and the parameter name to match the route parameter. If only one is correct, Laravel may not resolve the model automatically, which can cause an error or incorrect parameter handling.
+
+### G2. Why does a Delete link open the detail page instead of deleting the record?
+
+An ordinary HTML link sends a GET request, not a DELETE request. Since the GET request matches the shoe detail route, Laravel opens the detail page instead of deleting the record. A DELETE form with `@csrf` and `@method('DELETE')` is needed to perform deletion.
+
+### G3. What does the second argument of old() do?
+
+The second argument of `old()` provides a fallback value when there is no previous input. In the edit form, it displays the existing shoe information when the page first loads, while preserving the user's entered values after validation fails.
+
+## Technologies Used
+- Laravel 12
+- PHP
+- SQLite
+- Blade
+- Bootstrap
+
 ## Author
-
 Trisha Ivy Gempis
